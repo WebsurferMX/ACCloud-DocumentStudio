@@ -7,11 +7,11 @@ namespace ACCloud.DocumentStudio.Api.Controllers;
 /// <summary>Plantillas incluidas con la API (galería).</summary>
 [ApiController]
 [Route("api/templates/builtin")]
-public sealed class TemplatesController : ControllerBase
+public sealed class BuiltInTemplatesController : ControllerBase
 {
     private readonly BuiltInTemplateProvider _templates;
 
-    public TemplatesController(BuiltInTemplateProvider templates)
+    public BuiltInTemplatesController(BuiltInTemplateProvider templates)
     {
         _templates = templates;
     }

@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ACCloud.DocumentStudio.Renderer\ACCloud.DocumentStudio.Renderer.csproj" />
+    <ProjectReference Include="..\ACCloud.DocumentStudio.Rendering.Abstractions\ACCloud.DocumentStudio.Rendering.Abstractions.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

@@ -1,6 +1,7 @@
 using System.Text;
 using ACCloud.DocumentStudio.Renderer.Interfaces;
-using ACCloud.DocumentStudio.Renderer.Models;
+using ACCloud.DocumentStudio.Rendering.Abstractions;
+using ACCloud.DocumentStudio.Rendering.Abstractions.Models;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;

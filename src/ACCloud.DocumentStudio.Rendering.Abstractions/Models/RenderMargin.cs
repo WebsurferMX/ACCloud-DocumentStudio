@@ -1,4 +1,4 @@
-namespace ACCloud.DocumentStudio.Renderer.Models;
+namespace ACCloud.DocumentStudio.Rendering.Abstractions.Models;
 
 /// <summary>Márgenes de página en milímetros.</summary>
 public sealed record RenderMargin(

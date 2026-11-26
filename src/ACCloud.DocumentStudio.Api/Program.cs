@@ -1,5 +1,8 @@
 using ACCloud.DocumentStudio.Api.Services;
+using ACCloud.DocumentStudio.Application;
+using ACCloud.DocumentStudio.Persistence;
 using ACCloud.DocumentStudio.Renderer.Interfaces;
+using ACCloud.DocumentStudio.Rendering.Abstractions;
 using ACCloud.DocumentStudio.Renderer.Services;
 using ACCloud.DocumentStudio.TemplateEngine.Interfaces;
 using ACCloud.DocumentStudio.TemplateEngine.Services;
@@ -48,7 +51,17 @@ builder.Services.AddScoped<
 
 builder.Services.AddSingleton<BuiltInTemplateProvider>();
 
+builder.Services.AddDocumentStudioApplication();
+
+builder.Services.AddDocumentStudioPersistence();
+
 var app = builder.Build();
+
+// Solo en desarrollo: aplica migraciones pendientes al arrancar.
+if (app.Configuration.GetValue<bool>("Database:MigrateOnStartup"))
+{
+    await DatabaseMigrator.MigrateAsync(app.Services, app.Logger);
+}
 
 app.UseExceptionHandler();
 
@@ -59,3 +72,6 @@ app.UseSwaggerUI();
 app.MapControllers();
 
 app.Run();
+
+/// <summary>Expuesto para pruebas con WebApplicationFactory.</summary>
+public partial class Program;

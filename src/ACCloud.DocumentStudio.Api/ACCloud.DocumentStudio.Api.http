@@ -75,3 +75,82 @@ GET {{host}}/api/templates/builtin
 
 ###
 GET {{host}}/api/templates/builtin/cfdi-factura
+
+############################################################
+# API v1: plantillas guardadas en PostgreSQL (con versiones)
+# Reemplaza @templateId con el id que devuelve la creación.
+############################################################
+@templateId = 00000000-0000-0000-0000-000000000000
+
+### Crear plantilla (versión 1)
+POST {{host}}/api/v1/templates
+Content-Type: application/json
+
+{
+  "name": "Saludo",
+  "description": "Ejemplo mínimo",
+  "definition": {
+    "sections": [
+      { "height": 12, "elements": [ { "type": "text", "width": 120, "height": 8, "value": "Hola {{data.nombre}}", "fontSize": 14 } ] }
+    ]
+  },
+  "sampleData": { "nombre": "Mundo" }
+}
+
+### Crear a partir de una plantilla incluida
+POST {{host}}/api/v1/templates/from-builtin
+Content-Type: application/json
+
+{ "builtIn": "cfdi-factura", "name": "Factura CFDI" }
+
+### Listar (búsqueda, paginación, incluir archivadas)
+GET {{host}}/api/v1/templates?search=factura&page=1&pageSize=20&includeArchived=false
+
+### Detalle (definición de la versión más reciente)
+GET {{host}}/api/v1/templates/{{templateId}}
+
+### Guardar versión nueva
+PUT {{host}}/api/v1/templates/{{templateId}}
+Content-Type: application/json
+
+{
+  "comment": "Texto más grande",
+  "definition": {
+    "sections": [
+      { "height": 14, "elements": [ { "type": "text", "width": 120, "height": 10, "value": "Hola {{data.nombre}}", "fontSize": 20, "bold": true } ] }
+    ]
+  }
+}
+
+### Historial de versiones
+GET {{host}}/api/v1/templates/{{templateId}}/versions
+
+### Publicar la versión 1 (se usa por defecto al generar)
+POST {{host}}/api/v1/templates/{{templateId}}/publish
+Content-Type: application/json
+
+{ "version": 1 }
+
+### Restaurar la versión 1 como versión nueva
+POST {{host}}/api/v1/templates/{{templateId}}/versions/1/restore
+
+### Generar PDF (versión publicada; sin data usa los datos de prueba)
+POST {{host}}/api/v1/documents
+Content-Type: application/json
+
+{ "templateId": "{{templateId}}", "data": { "nombre": "ACCloud" } }
+
+### Vista previa PNG de una versión específica
+POST {{host}}/api/v1/documents
+Content-Type: application/json
+
+{ "templateId": "{{templateId}}", "version": 2, "format": "png", "page": 1, "dpi": 96 }
+
+### CFDI con plantilla guardada
+POST {{host}}/api/cfdi/render?templateId={{templateId}}
+Content-Type: application/xml
+
+< ../../samples/cfdi/factura-ejemplo.xml
+
+### Archivar
+DELETE {{host}}/api/v1/templates/{{templateId}}

@@ -1,6 +1,6 @@
-using ACCloud.DocumentStudio.Renderer.Models;
+using ACCloud.DocumentStudio.Rendering.Abstractions.Models;
 
-namespace ACCloud.DocumentStudio.Renderer.Interfaces;
+namespace ACCloud.DocumentStudio.Rendering.Abstractions;
 
 public interface IDocumentRenderer
 {

@@ -1,4 +1,4 @@
-namespace ACCloud.DocumentStudio.Renderer.Models;
+namespace ACCloud.DocumentStudio.Rendering.Abstractions.Models;
 
 /// <summary>Elemento posicionado dentro de una banda (medidas en mm).</summary>
 public abstract class RenderElement

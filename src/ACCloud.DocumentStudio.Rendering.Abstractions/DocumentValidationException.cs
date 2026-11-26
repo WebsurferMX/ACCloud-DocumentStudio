@@ -1,4 +1,4 @@
-namespace ACCloud.DocumentStudio.Renderer;
+namespace ACCloud.DocumentStudio.Rendering.Abstractions;
 
 /// <summary>
 /// Error causado por la plantilla o los datos enviados (no por el servidor).

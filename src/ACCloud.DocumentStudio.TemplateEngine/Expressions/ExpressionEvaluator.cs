@@ -1,6 +1,6 @@
 using System.Globalization;
 using System.Text.Json;
-using ACCloud.DocumentStudio.Renderer.Models;
+using ACCloud.DocumentStudio.Rendering.Abstractions.Models;
 
 namespace ACCloud.DocumentStudio.TemplateEngine.Expressions;
 

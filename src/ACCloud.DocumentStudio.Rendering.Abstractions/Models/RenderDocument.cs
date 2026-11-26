@@ -1,4 +1,4 @@
-namespace ACCloud.DocumentStudio.Renderer.Models;
+namespace ACCloud.DocumentStudio.Rendering.Abstractions.Models;
 
 /// <summary>
 /// Documento ya resuelto (sin expresiones), listo para dibujar.

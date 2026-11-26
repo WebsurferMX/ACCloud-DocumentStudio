@@ -1,3 +1,4 @@
+using ACCloud.DocumentStudio.Rendering.Abstractions;
 using ZXing;
 using ZXing.Common;
 using ZXing.QrCode;

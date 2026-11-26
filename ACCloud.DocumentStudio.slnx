@@ -6,6 +6,7 @@
     <Project Path="src/ACCloud.DocumentStudio.Domain/ACCloud.DocumentStudio.Domain.csproj" />
     <Project Path="src/ACCloud.DocumentStudio.Persistence/ACCloud.DocumentStudio.Persistence.csproj" />
     <Project Path="src/ACCloud.DocumentStudio.Renderer/ACCloud.DocumentStudio.Renderer.csproj" />
+    <Project Path="src/ACCloud.DocumentStudio.Rendering.Abstractions/ACCloud.DocumentStudio.Rendering.Abstractions.csproj" />
     <Project Path="src/ACCloud.DocumentStudio.TemplateEngine/ACCloud.DocumentStudio.TemplateEngine.csproj" />
   </Folder>
   <Folder Name="/tests/">

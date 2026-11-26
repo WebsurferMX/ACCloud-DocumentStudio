@@ -7,6 +7,72 @@ Formato de cada entrada: **Contexto → Diagnóstico → Acción → Verificaci�
 
 ---
 
+## 2026-11-26 — Fase 2: plantillas guardadas en PostgreSQL
+
+**Contexto.** Fase 2 de la hoja de ruta con PostgreSQL. El usuario eligió usar el servidor local (PostgreSQL 18 como servicio de Windows, puerto 5432) en lugar de un contenedor.
+
+**Diagnóstico previo.**
+
+- En el equipo están PostgreSQL 18.6 corriendo, `dotnet ef` 10.0.15 y Docker Desktop (apagado).
+- **Credenciales:** a pedido del usuario se buscaron en el equipo. No hay `pgpass.conf`, y `pg_hba.conf` exige `scram-sha-256`. Se encontró la variable de entorno `CFDI_POSTGRES_PASSWORD`, que funciona con el usuario `postgres`. La contraseña nunca se mostró ni se escribió en el repo.
+- En el servidor ya existían las bases `accloud`, `cfdi_mailer`, `cfdi_manager` y `cfdi_sender`. **No se tocaron**; se crearon solo `documentstudio` y `documentstudio_test`.
+- **Paquetes:** las últimas versiones de Npgsql EF y EF Design (11.0) son para .NET 11; se fijaron Npgsql.EntityFrameworkCore.PostgreSQL 10.0.4 y Microsoft.EntityFrameworkCore.Design 10.0.15.
+
+**Acción.**
+
+- **`Rendering.Abstractions` (proyecto nuevo):** modelos de render, `IDocumentRenderer` y `DocumentValidationException`. TemplateEngine ya no referencia al Renderer (QuestPDF).
+- **Domain:** `Template` con estado, versión actual y versión publicada; `AddVersion`, `Publish`/`Unpublish`, `Archive` y `ResolveVersion`. `TemplateVersion` es inmutable y guarda definición, datos de prueba y comentario. Excepciones `DomainValidationException` (400) y `DomainConflictException` (409). Se borró la carpeta vacía `Value Objects`.
+- **Persistence:**
+  - `DocumentStudioDbContext`, con esquema `document_studio`, snake_case, `jsonb` e índice único `(template_id, version_number)` contra versiones duplicadas por concurrencia;
+  - `TemplateRepository`: búsqueda `ILIKE` con escape; la violación de unicidad se traduce a 409;
+  - `DependencyInjection`: la cadena se lee al crear el DbContext; si falta, 503;
+  - `DatabaseMigrator`, `DesignTimeDbContextFactory` y la migración `InitialCreate`.
+- **Application:**
+  - `TemplateService` (CRUD, versiones, publicar, restaurar, validación de expresiones al guardar);
+  - `DocumentGenerator`, sin base;
+  - `DocumentService`, con plantillas guardadas;
+  - `NotFoundException` (404).
+- **Contracts:** peticiones y respuestas de plantillas, `PagedResponse`, `CreateDocumentRequest`; `CfdiRenderRequest` con `templateId`/`version`.
+- **API:**
+  - controladores `V1/TemplatesController` y `V1/DocumentsController`;
+  - `CfdiController` acepta plantilla guardada;
+  - `BuiltInTemplatesController` (renombrado);
+  - manejador de errores con 404/409/503;
+  - `UserSecretsId`, cadena de conexión en user-secrets (armada con `CFDI_POSTGRES_PASSWORD`) y `MigrateOnStartup` en Development.
+
+**Errores encontrados y corregidos.**
+
+1. **Swagger respondía 500 desde 0.3.0.** Causa: dos acciones con el mismo método y ruta (variantes JSON y XML de `/api/cfdi/*`). Las variantes XML se ocultaron de Swagger con `ApiExplorerSettings(IgnoreApi = true)` y siguen funcionando.
+2. **`/api/cfdi/render` con plantilla incluida respondía 503 sin base.** Lo encontró la prueba nueva `ApiSmokeTests`. `CfdiController` dependía de `DocumentService` → repositorio → DbContext. Se separó `IDocumentGenerator` (sin base) de `IDocumentService`, y el servicio con base solo se resuelve si llega `templateId`.
+3. **Errores de conexión en el log** al crear la base desde cero: se consultaban migraciones pendientes antes de que la base existiera. Ahora se llama directo a `MigrateAsync`.
+
+**Verificación.**
+
+- `dotnet build`: 0 errores. `dotnet test`: **82/82** correctas, 0 omitidas. Incluyen 3 pruebas contra PostgreSQL real (jsonb, versiones, conflicto de concurrencia → `DomainConflictException`, búsqueda y archivadas) y 4 pruebas de API en memoria (Swagger, CFDI sin base, 503 sin base, 400).
+- API levantada contra `documentstudio`. Flujo completo:
+  - crear desde la incluida → v1;
+  - listar;
+  - nueva versión (nombre del emisor en rojo) → v2, conservando los datos de prueba;
+  - publicar la v1;
+  - generar sin versión → usa la v1 (mismo tamaño que la incluida);
+  - PNG de la v2 → se revisó, nombre en rojo, `X-Total-Pages: 2`;
+  - CFDI con `templateId` (XML y JSON) → 200;
+  - historial con `isCurrent`/`isPublished` correctos;
+  - restaurar la v1 → v3 con el color original;
+  - expresión inválida → 400;
+  - id inexistente → 404;
+  - archivar → 204, y generar después → 404;
+  - el listado oculta las archivadas.
+- Swagger genera 15 rutas.
+- Datos que quedan en `documentstudio`: "Factura ACCloud" (archivada, de la prueba) y "Factura CFDI (desarrollo)" (activa, para seguir probando).
+
+**Pendiente.**
+
+- Sin autenticación: Fase 4.
+- En desarrollo se usa el superusuario `postgres`; para servidores, crear un usuario dedicado.
+
+---
+
 ## 2026-11-25 — Fase 1: motor de secciones y representación impresa de CFDI
 
 **Contexto.** Arranque de la Fase 1 de [ANALISIS-Y-ROADMAP.md](ANALISIS-Y-ROADMAP.md), con una factura CFDI como caso de prueba.

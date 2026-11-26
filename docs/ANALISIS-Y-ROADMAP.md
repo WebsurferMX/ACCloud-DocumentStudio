@@ -158,7 +158,9 @@ Cada fase se puede entregar y probar por separado. El orden prioriza lo que vuel
 4. Errores de validación como `400 ProblemDetails`.
 5. Pruebas: snapshot del árbol de render y pruebas de los formateadores.
 
-### Fase 2 — Plantillas y versiones
+### Fase 2 — Plantillas y versiones ✅ (0.4.0, 2026-11-26)
+
+> Hecha con PostgreSQL 18 (EF Core 10 + Npgsql). Además de lo planeado incluye: versión publicada, restaurar versión, datos de prueba por versión, validación de expresiones al guardar, archivado lógico, vista previa PNG con plantilla guardada y CFDI con `templateId`. Las rutas finales están en la guía de cambios 0.4.0.
 1. `Persistence` con EF Core (SQL Server o PostgreSQL): tablas `Templates` y `TemplateVersions`, con la definición en JSON.
 2. `Application`: casos de uso `CreateTemplate`, `UpdateTemplate` (crea versión), `GetTemplate`, `ListVersions`, `RenderDocument`.
 3. Rutas propias (REST):

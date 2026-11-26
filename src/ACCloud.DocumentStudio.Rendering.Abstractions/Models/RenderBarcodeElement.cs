@@ -1,4 +1,4 @@
-namespace ACCloud.DocumentStudio.Renderer.Models;
+namespace ACCloud.DocumentStudio.Rendering.Abstractions.Models;
 
 public sealed class RenderBarcodeElement
     : RenderElement

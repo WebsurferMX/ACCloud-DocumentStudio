@@ -1,4 +1,4 @@
-namespace ACCloud.DocumentStudio.Renderer.Models;
+namespace ACCloud.DocumentStudio.Rendering.Abstractions.Models;
 
 /// <summary>
 /// Línea horizontal si Width &gt;= Height; vertical en caso contrario.

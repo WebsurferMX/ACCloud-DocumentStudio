@@ -1,4 +1,4 @@
-namespace ACCloud.DocumentStudio.Renderer.Models;
+namespace ACCloud.DocumentStudio.Rendering.Abstractions.Models;
 
 /// <summary>
 /// Franja de altura fija; sus elementos se posicionan de forma absoluta

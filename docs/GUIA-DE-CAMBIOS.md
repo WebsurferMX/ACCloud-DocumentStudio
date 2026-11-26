@@ -5,6 +5,86 @@ El detalle técnico y cronológico está en [BITACORA.md](BITACORA.md).
 
 ---
 
+## 0.4.0 — 2026-11-26 — Fase 2: plantillas guardadas en PostgreSQL
+
+### Resumen
+
+- Las plantillas se guardan en **PostgreSQL** con **historial de versiones**: cada guardado crea una versión inmutable.
+- Una versión puede **publicarse**. Al generar se usa la versión pedida, si no la publicada, y si no la más reciente. Así se puede editar sin afectar lo que ya está en producción.
+- **Rollback** sin perder historial: restaurar una versión anterior crea una versión nueva igual a ella.
+- Cada versión guarda **datos de prueba** (`sampleData`) para el editor y la vista previa. Si al generar no se envía `data`, se usan esos.
+- Las expresiones se **validan al guardar**: una plantilla con sintaxis inválida no se guarda (400).
+- **Eliminación lógica:** archivar oculta la plantilla y bloquea su uso, pero conserva el historial.
+- `POST /api/cfdi/render` acepta `templateId` + `version` para usar una plantilla guardada.
+- Capas desacopladas: TemplateEngine ya no depende de QuestPDF (proyecto nuevo `Rendering.Abstractions`).
+
+### Endpoints nuevos (v1)
+
+| Método y ruta | Qué hace |
+|---|---|
+| `POST /api/v1/templates` | Crea la plantilla (versión 1). Body: `{ name, description?, definition, sampleData? }` |
+| `POST /api/v1/templates/from-builtin` | La crea copiando una incluida. Body: `{ builtIn: "cfdi-factura", name? }` |
+| `GET /api/v1/templates?search=&page=&pageSize=&includeArchived=` | Lista paginada (máx. 100 por página), las más recientes primero |
+| `GET /api/v1/templates/{id}` | Detalle con la definición y los datos de prueba de la versión más reciente |
+| `PUT /api/v1/templates/{id}` | Renombra y/o crea una versión. Body: `{ name?, description?, definition?, sampleData?, comment? }` |
+| `DELETE /api/v1/templates/{id}` | Archiva (204) |
+| `POST /api/v1/templates/{id}/publish` | Publica `{ version? }` (por defecto la más reciente) |
+| `POST /api/v1/templates/{id}/unpublish` | Quita la publicación |
+| `GET /api/v1/templates/{id}/versions` | Historial: `version`, `comment`, `createdAt`, `isCurrent`, `isPublished` |
+| `GET /api/v1/templates/{id}/versions/{n}` | Definición y datos de prueba de esa versión |
+| `POST /api/v1/templates/{id}/versions/{n}/restore` | Crea una versión nueva igual a la `n` |
+| `POST /api/v1/documents` | Genera. Body: `{ templateId, version?, data?, format: "pdf"\|"png", page?, dpi?, fileName? }` |
+
+**Reglas de `PUT`:**
+
+- Solo `name`/`description`: renombra sin crear versión.
+- Con `definition` o `sampleData`: crea una versión. Si no se envía `sampleData`, se copian los datos de prueba de la versión actual.
+
+**Códigos de respuesta nuevos:**
+
+| Código | Cuándo |
+|---|---|
+| 404 | La plantilla o versión no existe; también al generar con una plantilla archivada |
+| 409 | Dos guardados simultáneos intentaron crear el mismo número de versión. Volver a cargar e intentar de nuevo |
+| 503 | La base no está configurada. Los endpoints sin base (`/api/render`, `/api/cfdi/*` con plantilla incluida, `/api/templates/builtin`) siguen funcionando |
+
+Ejemplos listos en [ACCloud.DocumentStudio.Api.http](../src/ACCloud.DocumentStudio.Api/ACCloud.DocumentStudio.Api.http), sección "API v1".
+
+### Configuración de la base de datos
+
+La API lee `ConnectionStrings:DocumentStudio`. No hay contraseñas en el repositorio.
+
+- **Desarrollo:** user-secrets del proyecto Api.
+  ```
+  dotnet user-secrets set "ConnectionStrings:DocumentStudio" "Host=localhost;Port=5432;Database=documentstudio;Username=...;Password=..." --project src/ACCloud.DocumentStudio.Api
+  ```
+- **Servidor:** variable de entorno `ConnectionStrings__DocumentStudio`.
+- **Migraciones:** en Development se aplican solas al arrancar (`Database:MigrateOnStartup: true`); crean la base si no existe. En otros entornos están apagadas. Para aplicarlas a mano:
+  ```
+  set DOCUMENTSTUDIO_CONNECTION=Host=...;Database=documentstudio;Username=...;Password=...
+  dotnet ef database update --project src/ACCloud.DocumentStudio.Persistence
+  ```
+- **Esquema:** `document_studio`, con las tablas `templates`, `template_versions` y `__ef_migrations_history`. Nombres en snake_case; definiciones y datos de prueba en `jsonb`. Índice único `(template_id, version_number)`.
+- **Pruebas contra PostgreSQL:** usan la base `documentstudio_test`, que se recrea en cada ejecución. Toman la cadena de `DOCUMENTSTUDIO_TEST_CONNECTION` o, si no existe, de los user-secrets de la API, cambiando el nombre de la base. Sin configuración se marcan como omitidas.
+
+### ⚠️ Cambios internos (código)
+
+| Antes | Ahora |
+|---|---|
+| `Renderer.Models.*`, `Renderer.DocumentValidationException`, `Renderer.Interfaces.IDocumentRenderer` | Namespaces `Rendering.Abstractions.Models` y `Rendering.Abstractions` (proyecto nuevo) |
+| TemplateEngine → Renderer | TemplateEngine → Rendering.Abstractions; solo la API conoce QuestPDF |
+| Entidad `Template` con `IsPublished` y `Publish()` | `Status`, `CurrentVersion`, `PublishedVersion`, `AddVersion`, `Publish(n)`, `Archive`, `ResolveVersion` |
+| `ITemplateRepository` (3 métodos) | `GetAsync`, `GetVersionAsync`, `ListVersionsAsync`, `ListAsync`, `Add`, `SaveChangesAsync` |
+| `Api/Controllers/TemplatesController` (incluidas) | Renombrado `BuiltInTemplatesController`; la ruta `/api/templates/builtin` no cambia |
+
+### Corrección de un error de 0.3.0
+
+- **Swagger:** `/swagger/v1/swagger.json` respondía **500** desde 0.3.0. `/api/cfdi/data` y `/api/cfdi/render` tienen dos acciones con la misma ruta (JSON y XML), y OpenAPI no lo admite.
+- **Arreglo:** las variantes XML siguen funcionando, pero ya no aparecen en Swagger; su descripción quedó en las variantes JSON.
+- **Prevención:** una prueba nueva levanta la API en memoria y valida Swagger.
+
+---
+
 ## 0.3.0 — 2026-11-25 — Fase 1: motor de secciones y CFDI
 
 ### Resumen
@@ -246,12 +326,12 @@ ACCloud DocumentStudio/
 
 ## Pendientes conocidos
 
-Actualizado en 0.3.0. Ya resueltos: posicionamiento real, errores 400, código muerto del layout y `type` en cualquier posición.
+Actualizado en 0.4.0. Ya resueltos: posicionamiento real, errores 400, código muerto del layout, `type` en cualquier posición, acoplamiento TemplateEngine→Renderer y plantillas guardadas.
 
 | # | Tema | Impacto |
 |---|---|---|
-| 1 | `TemplateEngine` depende de `Renderer` (el compilador produce `RenderDocument`). | Acopla capas; se atiende en la Fase 2. |
-| 2 | `Application` y `Persistence` están vacíos; `ITemplateRepository` no tiene implementación. | Las plantillas solo llegan en el body o como incluidas (Fase 2). |
+| 1 | La API no tiene autenticación. | Cualquiera con acceso de red puede crear, editar o archivar plantillas. API keys y workspaces: Fase 4. |
+| 2 | En desarrollo la API se conecta con el superusuario `postgres`. | Para servidores, crear un usuario dedicado con permisos solo sobre la base `documentstudio`. |
 | 3 | Las imágenes por URL se descargan desde el servidor (http/https, 5 MB, 10 s). | Riesgo de SSRF si la API se expone a terceros: antes de producción, filtrar IPs privadas o usar una lista de dominios permitidos. |
 | 4 | Una sección no se parte entre páginas; una sección más alta que la página provoca error. | Diseñar secciones de altura menor a la página. |
 | 5 | Si un texto no cabe en su caja se **reduce** de tamaño en lugar de crecer la sección. | Descripciones muy largas se ven pequeñas; "altura automática" queda pendiente. |

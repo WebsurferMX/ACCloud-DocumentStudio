@@ -1,4 +1,4 @@
-using ACCloud.DocumentStudio.Renderer;
+using ACCloud.DocumentStudio.Rendering.Abstractions;
 using ACCloud.DocumentStudio.TemplateEngine.Models;
 
 namespace ACCloud.DocumentStudio.TemplateEngine.Services;
