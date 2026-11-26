@@ -7,6 +7,61 @@ Formato de cada entrada: **Contexto → Diagnóstico → Acción → Verificaci�
 
 ---
 
+## 2026-11-25 — Fase 1: motor de secciones y representación impresa de CFDI
+
+**Contexto.** Arranque de la Fase 1 de [ANALISIS-Y-ROADMAP.md](ANALISIS-Y-ROADMAP.md), con una factura CFDI como caso de prueba.
+
+**Diagnóstico previo.**
+
+- Se revisó la API de QuestPDF 2026.9.2 en su XML de documentación. Hay `Layers`, `OffsetX/OffsetY`, `Unconstrained`, `ScaleToFit`, `BreakAnywhere`, `CurrentPageNumber`/`TotalPages` y `Svg`. No hay `TranslateX` ni una forma de recortar contenido.
+- QuestPDF no genera códigos de barras; se agregó ZXing.Net 0.16.11 (salida SVG).
+
+**Acción.**
+
+- **Modelo de plantilla:** `header` / `sections[]` / `footer`; secciones con `dataSource` y `visibleIf`; medidas en mm; tamaños de página predefinidos. `elements` sin sección se conserva por compatibilidad.
+- **Expresiones:** parser propio, raíces `data` / `row` / `rowIndex` / `rowNumber` / `sys`, 23 funciones, importe con letra. Cache de expresiones con tope de 10,000.
+- **Render:** cada sección es una banda de altura fija con capas en posición absoluta. Header y footer van en cada página. `{{sys.pageNumber}}` y `{{sys.totalPages}}` pasan como marcadores Unicode de uso privado y QuestPDF los resuelve al paginar. El texto que no cabe se escala.
+- **Elementos:** text, image (URL/data URI/base64 con límite de 5 MB), line, rect, qr, barcode.
+- **CFDI:** `CfdiXmlConverter` (XML 3.3/4.0 a JSON, DTD prohibido, catálogos, `qrUrl`, `cadenaOriginalTimbre`, `totalConLetra`). Plantilla `cfdi-factura.json`. Endpoints `/api/cfdi/render` y `/api/cfdi/data`, con XML en JSON o directo en el body.
+- **API:** `POST /api/render/preview` (PNG por página), `GET /api/templates/builtin`, `ValidationExceptionHandler` (400 ProblemDetails) y `AllowOutOfOrderMetadataProperties`.
+- **Muestras:** `samples/cfdi/factura-ejemplo.xml` es un CFDI 4.0 ficticio con RFC de prueba del SAT, 32 conceptos y sellos aleatorios no válidos. Se generó con un script fuera del repo. `factura-ejemplo.pdf` es su resultado.
+- Eliminados `RenderPage`, `ILayoutEngine`, `SimpleLayoutEngine` y `ElementType` (sin uso).
+
+**Verificación.**
+
+- `dotnet build` de la solución: 0 errores. `dotnet test`: **57/57** correctas (expresiones, importe con letra, compilador, JSON de secciones, CFDI, render de punta a punta con conteo de páginas).
+- API levantada:
+  - `POST /api/cfdi/render` con el XML de ejemplo → 200, PDF de 2 páginas. Se revisaron las vistas previas: encabezado y pie repetidos, conceptos que pasan a la página 2, "Página X de 2", QR, sellos cortados en cualquier carácter, totales e importe con letra correctos.
+  - Errores: sin `type`, expresión con sintaxis inválida, función inexistente y XML que no es CFDI → 400 con mensaje claro, sin stack trace.
+  - El contrato 0.2 (elementos sin sección, `type` en otra posición) → 200.
+  - El ejemplo del `.http` → 200; vista previa revisada.
+
+**Pendiente.** Ver "Pendientes conocidos" en la guía de cambios: SSRF en imágenes por URL, altura automática de texto, validar el QR contra el verificador del SAT y desacoplar capas (Fase 2).
+
+---
+
+## 2026-11-25 — Análisis de producto de referencia y hoja de ruta
+
+**Contexto.** Se pidió analizar un SaaS de generación de PDF por plantillas (CraftMyPDF) para definir cómo construir algo similar con DocumentStudio.
+
+**Diagnóstico.**
+
+- El dashboard requiere sesión. El navegador del usuario no tenía depuración remota, así que REA no pudo verlo.
+- Se abrió Edge con un perfil aislado y depuración remota (`127.0.0.1:9222`). La referencia pública de la API se inspeccionó con REA `inspect_web_page` (evidencia `ev_fa31c1c323c351fa98787f31eb3830bd006c9e55035886b3d96c9d2ffe68828b`). De ahí salen 26 operaciones, los nombres de campos y las regiones.
+- Las páginas públicas (features, pricing, seguridad, e-sign) se leyeron para conocer el editor, los planes y la arquitectura declarada.
+- Con la sesión del usuario en ese Edge:
+  - Bundle del dashboard (`analyze_web_bundle`): app renderizada en el servidor; el editor está en un bundle de 5.7 MB que no se pudo procesar a tiempo.
+  - Diseñador con una plantilla de ejemplo (`inspect_web_page` + captura, evidencia `ev_32cc7d78…869a9c9`), solo lectura. Se observaron secciones Header/Normal/Footer con *data-binding*, componentes (Text, Image, Rectangle, Line, QR, Bar-code), expresiones `data.` / `row.` / `sys.` y funciones `ifNull` y `sum`.
+  - No se observó el JSON interno de la plantilla.
+
+**Acción.** Se creó [ANALISIS-Y-ROADMAP.md](ANALISIS-Y-ROADMAP.md) con la comparación contra el estado actual y una hoja de ruta en 6 fases. La Fase 6 propone un diferenciador: representación impresa de CFDI 4.0.
+
+**Verificación.** No aplica (documento de análisis; no cambia código).
+
+**Pendiente.** Decidir base de datos, almacenamiento y tecnología del editor; arrancar la Fase 1.
+
+---
+
 ## 2026-11-25 — Reorganización de carpetas y limpieza
 
 **Contexto.** La carpeta del Renderer tenía un nivel `Render/` que no coincidía con los namespaces declarados (`Renderer.Interfaces`, `Renderer.Layout`, `Renderer.Services`). `SimpleLayoutEngine` estaba en `Render/Models/`, pero su namespace es `Layout`, y en `Render/Interfaces/` había otro `SimpleLayoutEngine.cs` vacío. La solución `.slnx` solo listaba el proyecto de tests.

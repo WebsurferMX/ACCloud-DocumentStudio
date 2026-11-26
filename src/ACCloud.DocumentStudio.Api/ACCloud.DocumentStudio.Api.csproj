@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Templates\**\*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ACCloud.DocumentStudio.TemplateEngine\ACCloud.DocumentStudio.TemplateEngine.csproj" />
     <ProjectReference Include="..\ACCloud.DocumentStudio.Renderer\ACCloud.DocumentStudio.Renderer.csproj" />
     <ProjectReference Include="..\ACCloud.DocumentStudio.Contracts\ACCloud.DocumentStudio.Contracts.csproj" />

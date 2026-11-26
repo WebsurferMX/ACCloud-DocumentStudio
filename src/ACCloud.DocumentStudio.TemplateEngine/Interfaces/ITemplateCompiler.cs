@@ -1,3 +1,4 @@
+using System.Text.Json;
 using ACCloud.DocumentStudio.Renderer.Models;
 using ACCloud.DocumentStudio.TemplateEngine.Models;
 
@@ -5,7 +6,11 @@ namespace ACCloud.DocumentStudio.TemplateEngine.Interfaces;
 
 public interface ITemplateCompiler
 {
-    List<RenderTextElement> Compile(
+    /// <summary>
+    /// Resuelve expresiones, repite secciones con dataSource y aplica
+    /// visibilidad, produciendo un documento listo para dibujar.
+    /// </summary>
+    RenderDocument Compile(
         TemplateDefinition template,
-        object data);
+        JsonElement data);
 }

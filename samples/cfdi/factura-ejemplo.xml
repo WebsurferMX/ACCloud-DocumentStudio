@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- CFDI 4.0 DE EJEMPLO para pruebas de DocumentStudio. Datos ficticios con RFC de prueba del SAT; los sellos son aleatorios y NO son válidos. -->
+<cfdi:Comprobante xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="4.0" Serie="A" Folio="1024" Fecha="2026-11-25T10:30:00" Sello="+9oSEAn2oFo505g9G7GCzKu05/xt7mceNwPpzY4cJPD9vePuBguFFIHF639lQy5W9y2PIBFGICtmwAIYA9y2uzSxTh/CgDB1ehQFxrB8/A36McPM8o5ift9Vy1Sk+b+CmfRZTmugjCcTHlg8xptzj37zburG6hJu/hCg7loOLoRnSpsrpi++xvow+tpGIgPQISADx/r4i+d1nupEzla11izaqVAlaVyEAqmZqhcYfZAfnhRtjYtOwAuvLH18PNQU02PxyjyF4zn2kKVgaBhfyjpyfLHz1ub/gcwj4XmQNVIfQUvENsNuF7dPgD6znnr0eQbr2+fu7KUYNPkRK2CfXg==" FormaPago="03" NoCertificado="30001000000500003416" Certificado="" CondicionesDePago="Contado" SubTotal="126410.20" Moneda="MXN" Total="146635.83" TipoDeComprobante="I" Exportacion="01" MetodoPago="PUE" LugarExpedicion="42501">
+  <cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601"/>
+  <cfdi:Receptor Rfc="URE180429TM6" Nombre="UNIVERSIDAD ROBOTICA ESPAÑOLA" DomicilioFiscalReceptor="86991" RegimenFiscalReceptor="601" UsoCFDI="G03"/>
+  <cfdi:Conceptos>
+    <cfdi:Concepto ClaveProdServ="43211507" Cantidad="1" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Computadora portátil 14&quot; Core i7, 16 GB RAM, 512 GB SSD" ValorUnitario="18999.00" Importe="18999.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="18999.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="3039.84"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43211708" Cantidad="3" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Teclado inalámbrico USB" ValorUnitario="459.90" Importe="1379.70" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="1379.70" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="220.75"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43211708" Cantidad="3" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Mouse óptico inalámbrico" ValorUnitario="289.50" Importe="868.50" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="868.50" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="138.96"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43212105" Cantidad="1" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Impresora multifuncional láser monocromática" ValorUnitario="4870.00" Importe="4870.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="4870.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="779.20"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="44103103" Cantidad="4" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Tóner negro de alto rendimiento para impresora láser" ValorUnitario="1325.75" Importe="5303.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="5303.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="848.48"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="81111500" Cantidad="2" ClaveUnidad="E48" Unidad="Unidad de servicio" Descripcion="Servicio de instalación y configuración de equipo de cómputo en sitio, incluye migración de datos del equipo anterior" ValorUnitario="850.00" Importe="1700.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="1700.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="272.00"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43201803" Cantidad="2" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Disco duro externo 2 TB USB 3.2" ValorUnitario="1499.00" Importe="2998.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="2998.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="479.68"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43222609" Cantidad="1" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Switch de red administrable 24 puertos Gigabit" ValorUnitario="6250.00" Importe="6250.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="6250.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="1000.00"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="26121609" Cantidad="1" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Cable de red UTP Cat 6, bobina 305 m" ValorUnitario="2980.00" Importe="2980.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="2980.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="476.80"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="39121011" Cantidad="2" ClaveUnidad="H87" Unidad="Pieza" Descripcion="No break 1500 VA con regulador" ValorUnitario="3150.00" Importe="6300.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="6300.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="1008.00"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43211902" Cantidad="2" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Monitor LED 27&quot; QHD" ValorUnitario="5490.00" Importe="10980.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="10980.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="1756.80"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43202005" Cantidad="10" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Memoria USB 64 GB" ValorUnitario="149.90" Importe="1499.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="1499.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="239.84"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="81112200" Cantidad="1" ClaveUnidad="E48" Unidad="Unidad de servicio" Descripcion="Póliza de soporte técnico mensual" ValorUnitario="3500.00" Importe="3500.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="3500.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="560.00"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="44121701" Cantidad="5" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Bolígrafo tinta gel azul, caja con 12 piezas" ValorUnitario="98.00" Importe="490.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="490.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="78.40"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="14111507" Cantidad="3" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Papel bond tamaño carta, caja con 10 paquetes de 500 hojas" ValorUnitario="1189.00" Importe="3567.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="3567.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="570.72"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="44122003" Cantidad="12" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Carpeta de argollas 2&quot;, color negro" ValorUnitario="64.50" Importe="774.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="774.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="123.84"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="56101703" Cantidad="1" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Escritorio ejecutivo en L con cajonera" ValorUnitario="7890.00" Importe="7890.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="7890.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="1262.40"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="56112104" Cantidad="4" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Silla ergonómica con soporte lumbar y descansabrazos ajustables" ValorUnitario="3299.00" Importe="13196.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="13196.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="2111.36"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43191501" Cantidad="3" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Teléfono IP con pantalla a color" ValorUnitario="1849.00" Importe="5547.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="5547.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="887.52"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="81111800" Cantidad="1" ClaveUnidad="E48" Unidad="Unidad de servicio" Descripcion="Licencia anual de antivirus para 10 equipos" ValorUnitario="4200.00" Importe="4200.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="4200.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="672.00"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43211609" Cantidad="3" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Base enfriadora para laptop" ValorUnitario="349.00" Importe="1047.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="1047.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="167.52"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="52161505" Cantidad="2" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Bocinas para computadora 2.1" ValorUnitario="699.00" Importe="1398.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="1398.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="223.68"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43211706" Cantidad="1" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Lector de código de barras inalámbrico" ValorUnitario="1590.00" Importe="1590.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="1590.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="254.40"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="45121504" Cantidad="4" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Cámara web Full HD con micrófono" ValorUnitario="899.00" Importe="3596.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="3596.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="575.36"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43233205" Cantidad="1" ClaveUnidad="E48" Unidad="Unidad de servicio" Descripcion="Licencia de software de facturación electrónica, suscripción anual" ValorUnitario="5600.00" Importe="5600.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="5600.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="896.00"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="26111702" Cantidad="6" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Batería recargable AA, paquete con 4" ValorUnitario="189.00" Importe="1134.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="1134.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="181.44"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="31201610" Cantidad="20" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Cinta adhesiva transparente 48 mm" ValorUnitario="32.50" Importe="650.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="650.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="104.00"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="24112402" Cantidad="4" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Organizador de escritorio metálico" ValorUnitario="245.00" Importe="980.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="980.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="156.80"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="43201402" Cantidad="2" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Tarjeta de red inalámbrica USB" ValorUnitario="399.00" Importe="798.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="798.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="127.68"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="46171610" Cantidad="4" ClaveUnidad="H87" Unidad="Pieza" Descripcion="Cámara de seguridad IP para interiores" ValorUnitario="1299.00" Importe="5196.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="5196.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="831.36"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="81111812" Cantidad="1" ClaveUnidad="E48" Unidad="Unidad de servicio" Descripcion="Servicio de respaldo en la nube 1 TB, mensual" ValorUnitario="780.00" Importe="780.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="780.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="124.80"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+    <cfdi:Concepto ClaveProdServ="78102203" Cantidad="1" ClaveUnidad="E48" Unidad="Unidad de servicio" Descripcion="Servicio de mensajería y entrega a domicilio" ValorUnitario="350.00" Importe="350.00" ObjetoImp="02">
+      <cfdi:Impuestos>
+        <cfdi:Traslados>
+          <cfdi:Traslado Base="350.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="56.00"/>
+        </cfdi:Traslados>
+      </cfdi:Impuestos>
+    </cfdi:Concepto>
+  </cfdi:Conceptos>
+  <cfdi:Impuestos TotalImpuestosTrasladados="20225.63">
+    <cfdi:Traslados>
+      <cfdi:Traslado Base="126410.20" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="20225.63"/>
+    </cfdi:Traslados>
+  </cfdi:Impuestos>
+  <cfdi:Complemento>
+    <tfd:TimbreFiscalDigital xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" UUID="9F0BC627-E727-45F1-AE85-4CDA9AA986F3" FechaTimbrado="2026-11-25T10:31:12" RfcProvCertif="SPR190613I52" SelloCFD="+9oSEAn2oFo505g9G7GCzKu05/xt7mceNwPpzY4cJPD9vePuBguFFIHF639lQy5W9y2PIBFGICtmwAIYA9y2uzSxTh/CgDB1ehQFxrB8/A36McPM8o5ift9Vy1Sk+b+CmfRZTmugjCcTHlg8xptzj37zburG6hJu/hCg7loOLoRnSpsrpi++xvow+tpGIgPQISADx/r4i+d1nupEzla11izaqVAlaVyEAqmZqhcYfZAfnhRtjYtOwAuvLH18PNQU02PxyjyF4zn2kKVgaBhfyjpyfLHz1ub/gcwj4XmQNVIfQUvENsNuF7dPgD6znnr0eQbr2+fu7KUYNPkRK2CfXg==" NoCertificadoSAT="30001000000500003456" SelloSAT="UQ5coeUV2opL6dm3wAxViqKQqFBdPrwPNz2nZNW9NhMjTkMUK72JeOaPgc1Cwv44rL4ANRxVgD8bfurvR+osNZn76Fe2kynp/wR0/5R3STNv7dys/wePvPetInzmHjxLHIOcsKKpkFQWdidAjMWr5T8GxDl5XFfVC3M+K38bCl0Fr811H6/wAU4rU7IDqj+8yF2gltv4kgVs+h3A9hjHrsxHmpDfbPSqw/P9zREyXiQcfHLYwL0hq4wi+ijtPLy+K8XbTv07uf6UBtRbOfD6EKAOoEtgfDVFyKi3L2U+SCPJx5O3rKLFY8TJFU2K9a9O+kg13V6qcv8GY5WIdAPdMw=="/>
+  </cfdi:Complemento>
+</cfdi:Comprobante>

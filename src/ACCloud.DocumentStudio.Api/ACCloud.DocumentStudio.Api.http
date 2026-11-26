@@ -1,16 +1,77 @@
-@ACCloud.DocumentStudio.Api_HostAddress = http://localhost:5176
+@host = http://localhost:5176
 
-POST {{ACCloud.DocumentStudio.Api_HostAddress}}/api/render
+### PDF desde plantilla con secciones (cabecera, renglones repetidos, pie)
+POST {{host}}/api/render
 Content-Type: application/json
 
 {
   "template": {
-    "page": { "width": 600, "height": 800 },
-    "elements": [
-      { "type": "text", "value": "Hola {{cliente.nombre}}", "fontSize": 14 }
-    ]
+    "page": { "size": "letter" },
+    "header": {
+      "height": 14,
+      "elements": [
+        { "type": "text", "x": 0, "y": 0, "width": 120, "height": 8, "value": "Pedido {{data.pedido}}", "fontSize": 14, "bold": true },
+        { "type": "line", "x": 0, "y": 12, "width": 195.9, "color": "#999999" }
+      ]
+    },
+    "sections": [
+      {
+        "name": "renglones",
+        "height": 7,
+        "dataSource": "data.items",
+        "elements": [
+          { "type": "text", "x": 0, "y": 1, "width": 10, "height": 5, "value": "{{rowNumber}}" },
+          { "type": "text", "x": 12, "y": 1, "width": 120, "height": 5, "value": "{{row.descripcion}}" },
+          { "type": "text", "x": 150, "y": 1, "width": 45, "height": 5, "value": "{{formatCurrency(row.importe)}}", "align": "right" }
+        ]
+      },
+      {
+        "name": "total",
+        "height": 10,
+        "elements": [
+          { "type": "text", "x": 100, "y": 2, "width": 95, "height": 6, "value": "Total: {{formatCurrency(sum(data.items, \"importe\"))}}", "bold": true, "align": "right" }
+        ]
+      }
+    ],
+    "footer": {
+      "height": 6,
+      "elements": [
+        { "type": "text", "x": 0, "y": 1, "width": 195.9, "height": 4, "value": "Página {{sys.pageNumber}} de {{sys.totalPages}}", "fontSize": 7, "align": "right" }
+      ]
+    }
   },
+  "data": {
+    "pedido": "P-001",
+    "items": [
+      { "descripcion": "Producto A", "importe": 120.5 },
+      { "descripcion": "Producto B", "importe": 80 }
+    ]
+  }
+}
+
+### Vista previa PNG (página 1)
+POST {{host}}/api/render/preview?page=1&dpi=96
+Content-Type: application/json
+
+{
+  "template": { "elements": [ { "type": "text", "width": 100, "height": 8, "value": "Hola {{cliente.nombre}}" } ] },
   "data": { "cliente": { "nombre": "Mundo" } }
 }
 
+### CFDI: PDF con la plantilla incluida (XML directo en el body)
+POST {{host}}/api/cfdi/render
+Content-Type: application/xml
+
+< ../../samples/cfdi/factura-ejemplo.xml
+
+### CFDI: JSON que recibe la plantilla (para diseñar plantillas propias)
+POST {{host}}/api/cfdi/data
+Content-Type: application/xml
+
+< ../../samples/cfdi/factura-ejemplo.xml
+
+### Plantillas incluidas
+GET {{host}}/api/templates/builtin
+
 ###
+GET {{host}}/api/templates/builtin/cfdi-factura

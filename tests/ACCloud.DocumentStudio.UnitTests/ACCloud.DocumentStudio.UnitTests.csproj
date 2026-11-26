@@ -22,4 +22,9 @@
     <ProjectReference Include="..\..\src\ACCloud.DocumentStudio.TemplateEngine\ACCloud.DocumentStudio.TemplateEngine.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\samples\cfdi\factura-ejemplo.xml" Link="TestData\factura-ejemplo.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\src\ACCloud.DocumentStudio.Api\Templates\cfdi-factura.json" Link="TestData\cfdi-factura.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,109 @@
+{
+  "page": { "size": "letter", "margin": { "top": 10, "right": 10, "bottom": 8, "left": 10 } },
+
+  "header": {
+    "name": "encabezado",
+    "height": 60,
+    "elements": [
+      { "type": "text", "id": "emisor_nombre", "x": 0, "y": 0, "width": 124, "height": 7, "value": "{{data.emisor.nombre}}", "fontSize": 13, "bold": true, "color": "#1F3A5F" },
+      { "type": "text", "id": "emisor_rfc", "x": 0, "y": 8, "width": 124, "height": 4.5, "value": "RFC: {{data.emisor.rfc}}", "fontSize": 8 },
+      { "type": "text", "id": "emisor_regimen", "x": 0, "y": 12.5, "width": 124, "height": 4.5, "value": "Régimen fiscal: {{data.emisor.regimenFiscal}} - {{data.emisor.regimenFiscalDesc}}", "fontSize": 8 },
+      { "type": "text", "id": "lugar_expedicion", "x": 0, "y": 17, "width": 124, "height": 4.5, "value": "Lugar de expedición (C.P.): {{data.lugarExpedicion}}", "fontSize": 8 },
+
+      { "type": "rect", "id": "caja_folio", "x": 128, "y": 0, "width": 67.9, "height": 24, "borderColor": "#1F3A5F", "borderWidth": 0.8, "cornerRadius": 1 },
+      { "type": "rect", "id": "franja_folio", "x": 128, "y": 0, "width": 67.9, "height": 6, "fillColor": "#1F3A5F", "borderWidth": 0, "zIndex": 1 },
+      { "type": "text", "id": "titulo", "x": 128, "y": 0.6, "width": 67.9, "height": 5, "value": "{{upper(ifNull(data.tipoDeComprobanteDesc, \"CFDI\"))}}", "fontSize": 9, "bold": true, "color": "#FFFFFF", "align": "center", "zIndex": 2 },
+      { "type": "text", "id": "serie_folio", "x": 130, "y": 7, "width": 64, "height": 4, "value": "Serie: {{ifNull(data.serie, \"-\")}}    Folio: {{ifNull(data.folio, \"-\")}}", "fontSize": 7.5 },
+      { "type": "text", "id": "fecha", "x": 130, "y": 11, "width": 64, "height": 4, "value": "Fecha de emisión: {{formatDate(data.fecha, \"dd/MM/yyyy HH:mm:ss\")}}", "fontSize": 7.5 },
+      { "type": "text", "id": "uuid_label", "x": 130, "y": 15, "width": 64, "height": 3.5, "value": "Folio fiscal (UUID):", "fontSize": 6.5, "bold": true },
+      { "type": "text", "id": "uuid", "x": 130, "y": 18.5, "width": 64, "height": 4, "value": "{{data.timbre.uuid}}", "fontSize": 7 },
+
+      { "type": "rect", "id": "caja_receptor", "x": 0, "y": 26, "width": 195.9, "height": 22, "borderColor": "#B8C4D6", "borderWidth": 0.6, "cornerRadius": 1 },
+      { "type": "text", "id": "receptor_label", "x": 2, "y": 27, "width": 60, "height": 4, "value": "RECEPTOR", "fontSize": 7.5, "bold": true, "color": "#1F3A5F" },
+      { "type": "text", "id": "receptor_nombre", "x": 2, "y": 31.5, "width": 122, "height": 5, "value": "{{data.receptor.nombre}}", "fontSize": 9, "bold": true },
+      { "type": "text", "id": "receptor_rfc", "x": 2, "y": 37, "width": 58, "height": 4, "value": "RFC: {{data.receptor.rfc}}", "fontSize": 7.5 },
+      { "type": "text", "id": "receptor_cp", "x": 60, "y": 37, "width": 64, "height": 4, "value": "Domicilio fiscal (C.P.): {{data.receptor.domicilioFiscalReceptor}}", "fontSize": 7.5 },
+      { "type": "text", "id": "receptor_regimen", "x": 2, "y": 42, "width": 122, "height": 4, "value": "Régimen fiscal: {{data.receptor.regimenFiscalReceptor}} - {{data.receptor.regimenFiscalReceptorDesc}}", "fontSize": 7.5 },
+      { "type": "text", "id": "uso_cfdi", "x": 128, "y": 31.5, "width": 66, "height": 8, "value": "Uso CFDI: {{data.receptor.usoCFDI}} - {{data.receptor.usoCFDIDesc}}", "fontSize": 7.5 },
+      { "type": "text", "id": "moneda", "x": 128, "y": 42, "width": 66, "height": 4, "value": "Moneda: {{data.moneda}}{{if(data.tipoCambio, concat(\"   T.C.: \", data.tipoCambio), \"\")}}", "fontSize": 7.5 },
+
+      { "type": "rect", "id": "franja_columnas", "x": 0, "y": 52, "width": 195.9, "height": 7, "fillColor": "#1F3A5F", "borderWidth": 0, "cornerRadius": 0.8 },
+      { "type": "text", "id": "col_cantidad", "x": 1, "y": 53.5, "width": 13, "height": 4, "value": "Cant.", "fontSize": 7, "bold": true, "color": "#FFFFFF", "align": "right", "zIndex": 1 },
+      { "type": "text", "id": "col_unidad", "x": 16, "y": 53.5, "width": 20, "height": 4, "value": "Unidad", "fontSize": 7, "bold": true, "color": "#FFFFFF", "zIndex": 1 },
+      { "type": "text", "id": "col_clave", "x": 37, "y": 53.5, "width": 17, "height": 4, "value": "Clave SAT", "fontSize": 7, "bold": true, "color": "#FFFFFF", "zIndex": 1 },
+      { "type": "text", "id": "col_descripcion", "x": 55, "y": 53.5, "width": 84, "height": 4, "value": "Descripción", "fontSize": 7, "bold": true, "color": "#FFFFFF", "zIndex": 1 },
+      { "type": "text", "id": "col_unitario", "x": 140, "y": 53.5, "width": 26, "height": 4, "value": "P. unitario", "fontSize": 7, "bold": true, "color": "#FFFFFF", "align": "right", "zIndex": 1 },
+      { "type": "text", "id": "col_importe", "x": 167, "y": 53.5, "width": 27.5, "height": 4, "value": "Importe", "fontSize": 7, "bold": true, "color": "#FFFFFF", "align": "right", "zIndex": 1 }
+    ]
+  },
+
+  "sections": [
+    {
+      "name": "conceptos",
+      "height": 9,
+      "dataSource": "data.conceptos",
+      "elements": [
+        { "type": "text", "id": "cantidad", "x": 1, "y": 1.2, "width": 13, "height": 7, "value": "{{formatNumber(row.cantidad, \"#,##0.##\")}}", "fontSize": 7, "align": "right" },
+        { "type": "text", "id": "unidad", "x": 16, "y": 1.2, "width": 20, "height": 7, "value": "{{row.claveUnidad}} {{ifNull(row.unidad, \"\")}}", "fontSize": 6.5 },
+        { "type": "text", "id": "clave", "x": 37, "y": 1.2, "width": 17, "height": 7, "value": "{{row.claveProdServ}}", "fontSize": 6.5 },
+        { "type": "text", "id": "descripcion", "x": 55, "y": 1.2, "width": 84, "height": 7, "value": "{{row.descripcion}}", "fontSize": 7 },
+        { "type": "text", "id": "unitario", "x": 140, "y": 1.2, "width": 26, "height": 7, "value": "{{formatCurrency(row.valorUnitario)}}", "fontSize": 7, "align": "right" },
+        { "type": "text", "id": "importe", "x": 167, "y": 1.2, "width": 27.5, "height": 7, "value": "{{formatCurrency(row.importe)}}", "fontSize": 7, "align": "right" },
+        { "type": "line", "id": "separador", "x": 0, "y": 8.8, "width": 195.9, "height": 0, "color": "#DDE3EC", "thickness": 0.5 }
+      ]
+    },
+    {
+      "name": "totales",
+      "height": 38,
+      "elements": [
+        { "type": "text", "id": "letra_label", "x": 0, "y": 3, "width": 124, "height": 4, "value": "Importe con letra:", "fontSize": 7, "bold": true, "color": "#1F3A5F" },
+        { "type": "text", "id": "letra", "x": 0, "y": 7, "width": 124, "height": 8, "value": "{{data.totalConLetra}}", "fontSize": 7.5 },
+        { "type": "text", "id": "forma_pago", "x": 0, "y": 16, "width": 124, "height": 4, "value": "Forma de pago: {{data.formaPago}} - {{data.formaPagoDesc}}", "fontSize": 7 },
+        { "type": "text", "id": "metodo_pago", "x": 0, "y": 20.5, "width": 124, "height": 4, "value": "Método de pago: {{data.metodoPago}} - {{data.metodoPagoDesc}}", "fontSize": 7 },
+        { "type": "text", "id": "tipo", "x": 0, "y": 25, "width": 124, "height": 4, "value": "Tipo de comprobante: {{data.tipoDeComprobante}} - {{data.tipoDeComprobanteDesc}}    Exportación: {{data.exportacion}}", "fontSize": 7 },
+        { "type": "text", "id": "condiciones", "x": 0, "y": 29.5, "width": 124, "height": 4, "value": "Condiciones de pago: {{data.condicionesDePago}}", "fontSize": 7, "visibleIf": "data.condicionesDePago" },
+
+        { "type": "text", "id": "subtotal_label", "x": 130, "y": 3, "width": 36, "height": 4.5, "value": "Subtotal", "fontSize": 8, "align": "right" },
+        { "type": "text", "id": "subtotal", "x": 167, "y": 3, "width": 27.5, "height": 4.5, "value": "{{formatCurrency(data.subTotal)}}", "fontSize": 8, "align": "right" },
+        { "type": "text", "id": "descuento_label", "x": 130, "y": 8, "width": 36, "height": 4.5, "value": "Descuento", "fontSize": 8, "align": "right", "visibleIf": "gt(data.descuento, 0)" },
+        { "type": "text", "id": "descuento", "x": 167, "y": 8, "width": 27.5, "height": 4.5, "value": "-{{formatCurrency(data.descuento)}}", "fontSize": 8, "align": "right", "visibleIf": "gt(data.descuento, 0)" },
+        { "type": "text", "id": "iva_label", "x": 130, "y": 13, "width": 36, "height": 4.5, "value": "IVA trasladado", "fontSize": 8, "align": "right", "visibleIf": "data.impuestos.ivaTrasladado" },
+        { "type": "text", "id": "iva", "x": 167, "y": 13, "width": 27.5, "height": 4.5, "value": "{{formatCurrency(data.impuestos.ivaTrasladado)}}", "fontSize": 8, "align": "right", "visibleIf": "data.impuestos.ivaTrasladado" },
+        { "type": "text", "id": "retenciones_label", "x": 130, "y": 18, "width": 36, "height": 4.5, "value": "Impuestos retenidos", "fontSize": 8, "align": "right", "visibleIf": "data.impuestos.totalImpuestosRetenidos" },
+        { "type": "text", "id": "retenciones", "x": 167, "y": 18, "width": 27.5, "height": 4.5, "value": "-{{formatCurrency(data.impuestos.totalImpuestosRetenidos)}}", "fontSize": 8, "align": "right", "visibleIf": "data.impuestos.totalImpuestosRetenidos" },
+        { "type": "rect", "id": "caja_total", "x": 130, "y": 24, "width": 65.9, "height": 7.5, "fillColor": "#1F3A5F", "borderWidth": 0, "cornerRadius": 0.8 },
+        { "type": "text", "id": "total_label", "x": 130, "y": 25.5, "width": 36, "height": 5, "value": "TOTAL", "fontSize": 9, "bold": true, "color": "#FFFFFF", "align": "right", "zIndex": 1 },
+        { "type": "text", "id": "total", "x": 167, "y": 25.5, "width": 27.5, "height": 5, "value": "{{formatCurrency(data.total)}}", "fontSize": 9, "bold": true, "color": "#FFFFFF", "align": "right", "zIndex": 1 }
+      ]
+    },
+    {
+      "name": "timbre",
+      "height": 52,
+      "visibleIf": "data.timbre",
+      "elements": [
+        { "type": "line", "id": "linea_timbre", "x": 0, "y": 1, "width": 195.9, "height": 0, "color": "#B8C4D6", "thickness": 0.6 },
+        { "type": "qr", "id": "qr_sat", "x": 0, "y": 4, "width": 36, "height": 36, "value": "{{data.qrUrl}}" },
+        { "type": "text", "id": "sello_cfd_label", "x": 40, "y": 3.5, "width": 155.9, "height": 3, "value": "Sello digital del CFDI:", "fontSize": 6.5, "bold": true, "color": "#1F3A5F" },
+        { "type": "text", "id": "sello_cfd", "x": 40, "y": 6.5, "width": 155.9, "height": 7.5, "value": "{{data.timbre.selloCFD}}", "fontSize": 5.5, "wrapAnywhere": true, "color": "#333333" },
+        { "type": "text", "id": "sello_sat_label", "x": 40, "y": 14.5, "width": 155.9, "height": 3, "value": "Sello digital del SAT:", "fontSize": 6.5, "bold": true, "color": "#1F3A5F" },
+        { "type": "text", "id": "sello_sat", "x": 40, "y": 17.5, "width": 155.9, "height": 7.5, "value": "{{data.timbre.selloSAT}}", "fontSize": 5.5, "wrapAnywhere": true, "color": "#333333" },
+        { "type": "text", "id": "cadena_label", "x": 40, "y": 25.5, "width": 155.9, "height": 3, "value": "Cadena original del complemento de certificación digital del SAT:", "fontSize": 6.5, "bold": true, "color": "#1F3A5F" },
+        { "type": "text", "id": "cadena", "x": 40, "y": 28.5, "width": 155.9, "height": 11, "value": "{{data.cadenaOriginalTimbre}}", "fontSize": 5.5, "wrapAnywhere": true, "color": "#333333" },
+        { "type": "text", "id": "cert_sat", "x": 40, "y": 41, "width": 78, "height": 4, "value": "No. de serie del certificado del SAT: {{data.timbre.noCertificadoSAT}}", "fontSize": 6.5 },
+        { "type": "text", "id": "fecha_timbrado", "x": 118, "y": 41, "width": 77.9, "height": 4, "value": "Fecha y hora de certificación: {{formatDate(data.timbre.fechaTimbrado, \"dd/MM/yyyy HH:mm:ss\")}}", "fontSize": 6.5 },
+        { "type": "text", "id": "cert_emisor", "x": 40, "y": 45.5, "width": 78, "height": 4, "value": "No. de serie del certificado del emisor: {{data.noCertificado}}", "fontSize": 6.5 },
+        { "type": "text", "id": "rfc_pac", "x": 118, "y": 45.5, "width": 77.9, "height": 4, "value": "RFC del proveedor de certificación: {{data.timbre.rfcProvCertif}}", "fontSize": 6.5 }
+      ]
+    }
+  ],
+
+  "footer": {
+    "name": "pie",
+    "height": 7,
+    "elements": [
+      { "type": "line", "id": "linea_pie", "x": 0, "y": 0.5, "width": 195.9, "height": 0, "color": "#B8C4D6", "thickness": 0.5 },
+      { "type": "text", "id": "leyenda", "x": 0, "y": 2, "width": 140, "height": 4, "value": "Este documento es una representación impresa de un CFDI {{data.version}}", "fontSize": 6.5, "color": "#4A5568" },
+      { "type": "text", "id": "pagina", "x": 140, "y": 2, "width": 55.9, "height": 4, "value": "Página {{sys.pageNumber}} de {{sys.totalPages}}", "fontSize": 6.5, "color": "#4A5568", "align": "right" }
+    ]
+  }
+}
