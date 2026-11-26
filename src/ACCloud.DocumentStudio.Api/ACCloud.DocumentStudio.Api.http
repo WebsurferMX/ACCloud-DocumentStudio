@@ -1,0 +1,16 @@
+@ACCloud.DocumentStudio.Api_HostAddress = http://localhost:5176
+
+POST {{ACCloud.DocumentStudio.Api_HostAddress}}/api/render
+Content-Type: application/json
+
+{
+  "template": {
+    "page": { "width": 600, "height": 800 },
+    "elements": [
+      { "type": "text", "value": "Hola {{cliente.nombre}}", "fontSize": 14 }
+    ]
+  },
+  "data": { "cliente": { "nombre": "Mundo" } }
+}
+
+###

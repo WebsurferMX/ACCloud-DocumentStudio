@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ACCloud.DocumentStudio.Api/ACCloud.DocumentStudio.Api.csproj" />
+    <Project Path="src/ACCloud.DocumentStudio.Application/ACCloud.DocumentStudio.Application.csproj" />
+    <Project Path="src/ACCloud.DocumentStudio.Contracts/ACCloud.DocumentStudio.Contracts.csproj" />
+    <Project Path="src/ACCloud.DocumentStudio.Domain/ACCloud.DocumentStudio.Domain.csproj" />
+    <Project Path="src/ACCloud.DocumentStudio.Persistence/ACCloud.DocumentStudio.Persistence.csproj" />
+    <Project Path="src/ACCloud.DocumentStudio.Renderer/ACCloud.DocumentStudio.Renderer.csproj" />
+    <Project Path="src/ACCloud.DocumentStudio.TemplateEngine/ACCloud.DocumentStudio.TemplateEngine.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ACCloud.DocumentStudio.UnitTests/ACCloud.DocumentStudio.UnitTests.csproj" />
+  </Folder>
+</Solution>
